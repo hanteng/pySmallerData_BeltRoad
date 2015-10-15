@@ -118,12 +118,12 @@ for col in list_to_rank:
 
 df_ling['geos_OBOR'] = df[df.ISO_in == True].groupby(['l_name'])['geo'].apply(lambda x: "[%s]" % ', '.join(x)).to_frame()
 
-df_ling.reset_index()
+df_ling=df_ling.reset_index()
 filename_out = "geoling.tsv"
 df_ling.to_csv(filename_out, sep="\t", float_format='%4.2f', index=False)
 filename_out = filename_out.replace("tsv","csv")
 df_ling.to_csv(filename_out, sep=",", float_format='%4.2f', index=False)
-
+df_ling=df_ling.set_index("l_name")
 
 ## Generating reports for top20
 dict_label ={
@@ -148,7 +148,7 @@ for col in list_ranked_OBOR:
     top20_lang=top20_lang[col_included_for_reports]
 
     # attach 'including regions ...'
-    top20_lang['geos'] = [df_ling['geos_OBOR'][l]for l in top20_lang.l_name]
+    top20_lang['geos'] = [df_ling['geos_OBOR'][l]for l in list(top20_lang.l_name)]
 
     top20_lang[list_ranked_OBOR] = top20_lang[list_ranked_OBOR].astype(int)
     top20_lang.columns=[dict_label.get(x) for x in top20_lang.columns]
