@@ -125,6 +125,8 @@ dict_label ={
 def export_output(df, filename_out):
     dataframe=df.copy().reset_index()
     dataframe.columns=[dict_label.get(x,x) for x in dataframe.columns]
+    if "dummy" in dataframe.columns:
+        dataframe.drop('dummy', axis=1, inplace=True)
     dataframe.to_csv(filename_out, sep="\t", float_format='%4.2f', index=False)
     filename_out = filename_out.replace("tsv","csv")
     dataframe.to_csv(filename_out, sep=",", float_format='%4.2f', index=False)
