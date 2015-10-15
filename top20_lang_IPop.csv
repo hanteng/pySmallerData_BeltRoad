@@ -1,21 +1,21 @@
-Language Name,Population (LP),Internet Population (IPop),Economy (PPPGDP),Internet addresses (IPv4),Ranking (LP),Ranking (IPop),Ranking (PPPGDP),Ranking (IPv4)
-English,461.03,125.76,4406.65,54.02,2,1,1,1
-Russian,180.16,103.17,3872.96,53.63,5,2,3,2
-Arabic,182.66,84.20,4213.69,30.72,4,3,2,3
-Hindi,509.77,76.98,2778.15,14.93,1,4,4,6
-Vietnamese,77.13,33.86,408.46,13.45,10,5,17,7
-Turkish,72.45,33.55,1359.87,15.72,13,6,6,5
-Egyptian Arabic,53.57,26.55,582.27,8.02,18,7,13,12
-Bengali,254.17,25.18,1034.95,3.97,3,8,7,21
-Indonesian,158.69,25.10,1528.93,11.31,6,9,5,8
-Polish,38.30,23.87,876.99,20.32,22,10,9,4
-Filipino,58.49,21.64,385.85,3.24,15,11,18,22
-Persian,73.81,19.43,1012.27,8.54,12,12,8,10
-Malay (Latin),23.59,15.84,607.62,5.99,31,13,12,18
-Thai,54.58,15.80,771.60,6.92,17,14,11,16
-Javanese,84.66,13.58,820.57,6.09,9,15,10,17
-Telugu,89.52,13.52,487.87,2.62,7,16,14,25
-Marathi,87.03,13.14,474.32,2.55,8,17,15,27
-Ukrainian,30.24,12.75,263.69,8.02,25,18,28,13
-Tamil,74.73,12.00,437.84,2.55,11,19,16,26
-Spanish,30.22,11.18,199.35,1.67,26,20,35,39
+Language Name,Population (LP),Internet Population (IPop),Economy (PPPGDP),Internet addresses (IPv4),Ranking (LP),Ranking (IPop),Ranking (PPPGDP),Ranking (IPv4),including regions ...
+English,461.03,125.76,4406.65,54.02,2,1,1,1,"[IN, PH, EG, BD, TH, TR, PL, IQ, IL, RO, MY, SG, JO, CZ, KZ, YE, HR, HU, BG, LB, BA, SK, SI, LT, BT, BN]"
+Russian,180.16,103.17,3872.96,53.63,5,2,3,2,"[RU, UA, KZ, UZ, KG, BY, TJ, IL, LV, TM, GE, EE, LT, MD, MN]"
+Arabic,182.66,84.20,4213.69,30.72,4,3,2,3,"[EG, SA, IQ, YE, AE, JO, KW, LB, OM, QA, IL, IR, BH, TR, TJ, PS, SY]"
+Hindi,509.77,76.98,2778.15,14.93,1,4,4,6,[IN]
+Vietnamese,77.13,33.86,408.46,13.45,10,5,17,7,[VN]
+Turkish,72.45,33.55,1359.87,15.72,13,6,6,5,"[TR, BG, UZ, UA, MK, RO]"
+Egyptian Arabic,53.57,26.55,582.27,8.02,18,7,13,12,[EG]
+Bengali,254.17,25.18,1034.95,3.97,3,8,7,21,"[BD, IN]"
+Indonesian,158.69,25.10,1528.93,11.31,6,9,5,8,[ID]
+Polish,38.30,23.87,876.99,20.32,22,10,9,4,"[PL, UA, IL, CZ, SK, RO]"
+Filipino,58.49,21.64,385.85,3.24,15,11,18,22,[PH]
+Persian,73.81,19.43,1012.27,8.54,12,12,8,10,"[IR, AF, IQ, QA, AE, TJ, OM]"
+Malay (Latin),23.59,15.84,607.62,5.99,31,13,12,18,"[MY, SG, BN]"
+Thai,54.58,15.80,771.60,6.92,17,14,11,16,[TH]
+Javanese,84.66,13.58,820.57,6.09,9,15,10,17,"[ID, MY]"
+Telugu,89.52,13.52,487.87,2.62,7,16,14,25,[IN]
+Marathi,87.03,13.14,474.32,2.55,8,17,15,27,[IN]
+Ukrainian,30.24,12.75,263.69,8.02,25,18,28,13,"[UA, MD, PL, SK, RS]"
+Tamil,74.73,12.00,437.84,2.55,11,19,16,26,"[IN, MY, SG]"
+Spanish,30.22,11.18,199.35,1.67,26,20,35,39,[PH]

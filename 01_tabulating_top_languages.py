@@ -72,6 +72,8 @@ for col in list_to_rank:
 #   - leverage Internet users and encourage Internet consumption: df.query('(LP_ranked>PPPGDP_ranked) and (PPPGDP_ranked>IPop_ranked)  ')
 #   - invest Internet infrastructuremore: df.query('(LP_ranked>IPop_ranked) and (IPop_ranked>PPPGDP_ranked)  ')
 
+
+
 ## Assigning global ranking numbers: ling
 def aggregate2ling(dataframe_in):
     dl=dataframe_in.groupby(['l_name']).sum()
@@ -96,6 +98,14 @@ def aggregate2ling(dataframe_in):
 df_ling = aggregate2ling(df)
 
 
+## Assigning geocodes under each ling: geo-ling pairs
+df_ = df
+
+df_ling=df_ling.set_index(['l_name'])
+df_ling['geos'] = df.groupby(['l_name'])['geo'].apply(lambda x: "[%s]" % ', '.join(x)).to_frame()
+
+
+
 ## Working on those that are included in the Belt and Road Initiative: ling
 df_ling_OBOR = aggregate2ling(df[df.ISO_in == True])
 df_ = df_ling_OBOR
@@ -105,6 +115,15 @@ for col in list_to_rank:
     colname_add = col + "_rOBOR"
     list_ranked_OBOR.append(colname_add)
     df_[colname_add]=df_.groupby('dummy')[col].rank(ascending=False) 
+
+df_ling['geos_OBOR'] = df[df.ISO_in == True].groupby(['l_name'])['geo'].apply(lambda x: "[%s]" % ', '.join(x)).to_frame()
+
+df_ling.reset_index()
+filename_out = "geoling.tsv"
+df_ling.to_csv(filename_out, sep="\t", float_format='%4.2f', index=False)
+filename_out = filename_out.replace("tsv","csv")
+df_ling.to_csv(filename_out, sep=",", float_format='%4.2f', index=False)
+
 
 ## Generating reports for top20
 dict_label ={
@@ -117,6 +136,7 @@ dict_label ={
     "IPop_rOBOR":"Ranking (IPop)",
     "PPPGDP_rOBOR":"Ranking (PPPGDP)",
     "IPv4_rOBOR":"Ranking (IPv4)",
+    "geos":"including regions ...",
     }
 
     
@@ -127,16 +147,15 @@ for col in list_ranked_OBOR:
     col_included_for_reports = ["l_name"]+list_to_rank + list_ranked_OBOR
     top20_lang=top20_lang[col_included_for_reports]
 
+    # attach 'including regions ...'
+    top20_lang['geos'] = [df_ling['geos_OBOR'][l]for l in top20_lang.l_name]
+
     top20_lang[list_ranked_OBOR] = top20_lang[list_ranked_OBOR].astype(int)
     top20_lang.columns=[dict_label.get(x) for x in top20_lang.columns]
     filename_out = "top20_lang_{}.tsv".format(indicator)
     top20_lang.to_csv(filename_out, sep="\t", float_format='%4.2f', index=False)
     filename_out = "top20_lang_{}.csv".format(indicator)
     top20_lang.to_csv(filename_out, sep=",", float_format='%4.2f', index=False)
-
-
-## Working on those that are included in the Belt and Road Initiative: geo-ling pairs
-
 
 
 
@@ -152,3 +171,5 @@ filename_out = "overall_world.tsv"
 df_overall_pcts.to_csv(filename_out, sep="\t", float_format='%4.2f', index=False)
 filename_out = filename_out.replace("tsv","csv")
 df_overall_pcts.to_csv(filename_out, sep=",", float_format='%4.2f', index=False)
+
+
