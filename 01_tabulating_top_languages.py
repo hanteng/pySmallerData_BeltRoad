@@ -99,16 +99,30 @@ df_ling = aggregate2ling(df)
 
 
 ## Assigning geocodes under each ling: geo-ling pairs
+def export_output(dataframe, filename_out):
+    dataframe.to_csv(filename_out, sep="\t", float_format='%4.2f', index=True)
+    filename_out = filename_out.replace("tsv","csv")
+    dataframe.to_csv(filename_out, sep=",", float_format='%4.2f', index=True)
+
 df_ = df
 
 df_ling=df_ling.set_index(['l_name'])
+
 df_ling['geos'] = df.groupby(['l_name'])['geo'].apply(lambda x: "[%s]" % ', '.join(x)).to_frame()
+#  those that are included in the Belt and Road Initiative
+df_ling['geos_OBOR'] = df[df.ISO_in == True].groupby(['l_name'])['geo'].apply(lambda x: "[%s]" % ', '.join(x)).to_frame()
 
-
+export_output(df_ling, "geoling.tsv")
 
 ## Working on those that are included in the Belt and Road Initiative: ling
 df_ling_OBOR = aggregate2ling(df[df.ISO_in == True])
-df_ = df_ling_OBOR
+df_ling_OBOR = df_ling_OBOR.reset_index()
+df_ling_OBOR['geos_OBOR'] = [df_ling['geos_OBOR'][l] for l in df_ling_OBOR.l_name]
+
+df_ling_OBOR=df_ling_OBOR.set_index(['l_name'])
+export_output(df_ling_OBOR, "geoling_OBOR.tsv")
+
+df_ = df_ling_OBOR.reset_index()
 
 list_ranked_OBOR = []
 for col in list_to_rank:
@@ -116,14 +130,7 @@ for col in list_to_rank:
     list_ranked_OBOR.append(colname_add)
     df_[colname_add]=df_.groupby('dummy')[col].rank(ascending=False) 
 
-df_ling['geos_OBOR'] = df[df.ISO_in == True].groupby(['l_name'])['geo'].apply(lambda x: "[%s]" % ', '.join(x)).to_frame()
 
-df_ling=df_ling.reset_index()
-filename_out = "geoling.tsv"
-df_ling.to_csv(filename_out, sep="\t", float_format='%4.2f', index=False)
-filename_out = filename_out.replace("tsv","csv")
-df_ling.to_csv(filename_out, sep=",", float_format='%4.2f', index=False)
-df_ling=df_ling.set_index("l_name")
 
 ## Generating reports for top20
 dict_label ={
@@ -144,7 +151,7 @@ for col in list_ranked_OBOR:
     indicator=col.replace("_rOBOR","")
     top20_lang=df_.sort_values([col], ascending=True)[0:20]
 
-    col_included_for_reports = ["l_name"]+list_to_rank + list_ranked_OBOR
+    col_included_for_reports = ["l_name"] + list_to_rank + list_ranked_OBOR
     top20_lang=top20_lang[col_included_for_reports]
 
     # attach 'including regions ...'
