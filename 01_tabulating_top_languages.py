@@ -105,11 +105,31 @@ def aggregate2ling(dataframe_in):
 df_ling = aggregate2ling(df)
 
 
+## Label dictionary for tsv/csv export
+dict_label ={
+    "l_name":"Language Name",
+    "LP":"Population (LP)",
+    "IPop":"Internet Population (IPop)",
+    "PPPGDP":"Economy (PPPGDP)",
+    "IPv4":"Internet addresses (IPv4)",
+    "LP_rOBOR":"Ranking (LP)",
+    "IPop_rOBOR":"Ranking (IPop)",
+    "PPPGDP_rOBOR":"Ranking (PPPGDP)",
+    "IPv4_rOBOR":"Ranking (IPv4)",
+    "geos":"including regions ...",
+    }
+
+
+
 ## Assigning geocodes under each ling: geo-ling pairs
-def export_output(dataframe, filename_out):
-    dataframe.to_csv(filename_out, sep="\t", float_format='%4.2f', index=True)
+def export_output(df, filename_out):
+    dataframe=df.copy().reset_index()
+    dataframe.columns=[dict_label.get(x,x) for x in dataframe.columns]
+    dataframe.to_csv(filename_out, sep="\t", float_format='%4.2f', index=False)
     filename_out = filename_out.replace("tsv","csv")
-    dataframe.to_csv(filename_out, sep=",", float_format='%4.2f', index=True)
+    dataframe.to_csv(filename_out, sep=",", float_format='%4.2f', index=False)
+
+
 
 df_ = df
 
@@ -119,11 +139,13 @@ df_ling['geos'] = df.groupby(['l_name'])['geo'].apply(lambda x: "[%s]" % ', '.jo
 #  those that are included in the Belt and Road Initiative
 df_ling['geos_OBOR'] = df[df.ISO_in == True].groupby(['l_name'])['geo'].apply(lambda x: "[%s]" % ', '.join(x)).to_frame()
 
-export_output(df_ling, "geoling.tsv")
+
+df_report=df_ling.copy()
+export_output(df_report, "geoling.tsv")
 
 ## Working on those that are included in the Belt and Road Initiative: ling
 df_ling_OBOR = aggregate2ling(df[df.ISO_in == True])
-df_ling_OBOR['geos_OBOR'] = [df_ling['geos_OBOR'][l] for l in df_ling_OBOR.l_name]
+df_ling_OBOR['geos_OBOR'] = [df_ling['geos_OBOR'][l] for l in list(df_ling_OBOR.l_name)]
 
 
 df_ling_OBOR=df_ling_OBOR.set_index(['l_name'])
@@ -139,20 +161,7 @@ for col in list_to_rank:
 
 
 ## Generating reports for top20
-dict_label ={
-    "l_name":"Language Name",
-    "LP":"Population (LP)",
-    "IPop":"Internet Population (IPop)",
-    "PPPGDP":"Economy (PPPGDP)",
-    "IPv4":"Internet addresses (IPv4)",
-    "LP_rOBOR":"Ranking (LP)",
-    "IPop_rOBOR":"Ranking (IPop)",
-    "PPPGDP_rOBOR":"Ranking (PPPGDP)",
-    "IPv4_rOBOR":"Ranking (IPv4)",
-    "geos":"including regions ...",
-    }
 
-    
 for col in list_ranked_OBOR:
     indicator=col.replace("_rOBOR","")
     top20_lang=df_.sort_values([col], ascending=True)[0:20]

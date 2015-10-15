@@ -1,4 +1,4 @@
-l_name	LP	IPop	PPPGDP	IPv4	dummy	LP_ranked	IPop_ranked	PPPGDP_ranked	IPv4_ranked	geos_OBOR
+Language Name	Population (LP)	Internet Population (IPop)	Economy (PPPGDP)	Internet addresses (IPv4)	dummy	LP_ranked	IPop_ranked	PPPGDP_ranked	IPv4_ranked	geos_OBOR
 Hindi	509.77	76.98	2778.15	14.93	True	1	4	4	6	[IN]
 English	461.03	125.76	4406.65	54.02	True	2	1	1	1	[IN, PH, EG, BD, TH, TR, PL, IQ, IL, RO, MY, SG, JO, CZ, KZ, YE, HR, HU, BG, LB, BA, SK, SI, LT, BT, BN]
 Bengali	254.17	25.18	1034.95	3.97	True	3	8	7	21	[BD, IN]
