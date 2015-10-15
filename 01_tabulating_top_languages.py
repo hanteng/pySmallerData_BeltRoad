@@ -75,6 +75,12 @@ for col in list_to_rank:
 
 
 ## Assigning global ranking numbers: ling
+def int_(x):
+    try:
+        return int(x)
+    except:
+        return None
+
 def aggregate2ling(dataframe_in):
     dl=dataframe_in.groupby(['l_name']).sum()
     dl['dummy']=[True]*len(dl)
@@ -86,7 +92,8 @@ def aggregate2ling(dataframe_in):
     for col in list_to_rank:
         colname_add = col + "_ranked"
         list_ranked.append(colname_add)
-        dl[colname_add]=dl.groupby('dummy')[col].rank(ascending=False) 
+        dl[colname_add]=[int_(x) for x in list(dl.groupby('dummy')[col].rank(ascending=False)) ]
+
     return dl
 # Development needed:
 #   - leverage Internet: dl.query('(LP_ranked<IPop_ranked) and (IPop_ranked<PPPGDP_ranked)  ')
@@ -118,6 +125,7 @@ export_output(df_ling, "geoling.tsv")
 df_ling_OBOR = aggregate2ling(df[df.ISO_in == True])
 df_ling_OBOR['geos_OBOR'] = [df_ling['geos_OBOR'][l] for l in df_ling_OBOR.l_name]
 
+
 df_ling_OBOR=df_ling_OBOR.set_index(['l_name'])
 export_output(df_ling_OBOR, "geoling_OBOR.tsv")
 
@@ -128,7 +136,6 @@ for col in list_to_rank:
     colname_add = col + "_rOBOR"
     list_ranked_OBOR.append(colname_add)
     df_[colname_add]=df_.groupby('dummy')[col].rank(ascending=False) 
-
 
 
 ## Generating reports for top20
