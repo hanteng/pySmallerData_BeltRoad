@@ -96,7 +96,7 @@ def aggregate2ling(dataframe_in):
 df_ling = aggregate2ling(df)
 
 
-## Working on those that are included in the Belt and Road Initiative
+## Working on those that are included in the Belt and Road Initiative: ling
 df_ling_OBOR = aggregate2ling(df[df.ISO_in == True])
 df_ = df_ling_OBOR
 
@@ -135,4 +135,20 @@ for col in list_ranked_OBOR:
     top20_lang.to_csv(filename_out, sep=",", float_format='%4.2f', index=False)
 
 
+## Working on those that are included in the Belt and Road Initiative: geo-ling pairs
 
+
+
+
+## Generating reports for the overall picture
+df_overall = df.groupby('ISO_in').sum()[list_to_rank]
+df_overall.columns=[dict_label.get(x) for x in df_overall.columns]
+df_overall_pcts = df_overall/df_overall.sum()
+
+df_overall_pcts.apply(lambda x: 100*x)
+df_overall_pcts = df_overall_pcts.reset_index()
+
+filename_out = "overall_world.tsv"
+df_overall_pcts.to_csv(filename_out, sep="\t", float_format='%4.2f', index=False)
+filename_out = filename_out.replace("tsv","csv")
+df_overall_pcts.to_csv(filename_out, sep=",", float_format='%4.2f', index=False)
