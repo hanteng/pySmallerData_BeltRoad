@@ -7,4 +7,4 @@ The data selection and example graphs will be explained as [an exercise explaine
 
 #DEPENDECIES
 
-These scripts use [pyCountryGroup] and [pyGeolinguisticSize]
+These scripts use [pyCountryGroup](https://github.com/hanteng/pyCountryGroup) and [pyGeolinguisticSize](https://github.com/hanteng/pyGeolinguisticSize) 
